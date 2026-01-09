@@ -25,19 +25,12 @@ help:
 sync: 
 	$(UV) sync
 
-fmt: 
+lint: ## Lint with ruff and apply safe auto-fixes
 	$(UV) run $(RUFF) format .
-
-lint: 
-	$(UV) run $(RUFF) check .
-
-lint-fix: ## Lint with ruff and apply safe auto-fixes
 	$(UV) run $(RUFF) check . --fix
 
-lint-fix-unsafe: 
-	$(UV) run $(RUFF) check . --fix --unsafe-fixes
-
-style: fmt lint
-
 main: ## Runs the main word count
-	$(UV) run main.py --document-path $(DOCUMENT_PATH)
+	$(UV) run python -m src.cli \
+		--document-path ./current_doc.tex \
+		--min-len 4
+

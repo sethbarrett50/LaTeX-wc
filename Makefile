@@ -34,3 +34,7 @@ main: ## Runs the main word count
 		--document-path ./current_doc.tex \
 		--min-len 4
 
+test: ## Runs a sample version of this script 
+	$(UV) run python -m src.cli \
+		--document-path ./sample.tex \
+		--min-len 4

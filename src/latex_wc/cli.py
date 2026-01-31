@@ -126,4 +126,5 @@ def _print_report(doc_path: Path, top_n: int, result) -> None:
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
+

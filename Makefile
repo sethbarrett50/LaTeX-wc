@@ -1,40 +1,42 @@
 SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
 
-UV  ?= uv
-PY  ?= python
-RUFF ?= ruff
+UV    ?= uv
+RUFF  ?= ruff
+PY    ?= python
 
 DOCUMENT_PATH ?= ./current_doc.tex
-LOG_DIR      ?=
+MIN_LEN ?= 4
 
-.PHONY: help sync test clean \
-        sim-bin sim-mc xseciot \
-        bin-label merge \
-        overall-perf overall-scrape
+.PHONY: help sync lint format check test run sample build clean
 
-help: 
-	@echo "Targets:"
-	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
-	@echo ""
-	@echo "Examples:"
-	@echo "  make sync"
-	@echo "  make test"
-	@echo "  make main DOCUMENT_PATH=datasets/CEFlows/CEFlows2_merged.csv"
+help: ## Show targets
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
-sync: 
-	$(UV) sync
+sync: ## Install/sync deps (including dev group)
+	$(UV) sync --dev
 
-lint: ## Lint with ruff and apply safe auto-fixes
+format: ## Format code
+	$(UV) run $(RUFF) format .
+
+check: ## Lint (no fixes)
+	$(UV) run $(RUFF) check .
+
+lint: ## Format + lint with fixes
 	$(UV) run $(RUFF) format .
 	$(UV) run $(RUFF) check . --fix
 
-main: ## Runs the main word count
-	$(UV) run python -m src.cli \
-		--document-path ./current_doc.tex \
-		--min-len 4
+run: ## Run word count on current_doc.tex
+	$(UV) run latex-wc --document-path $(DOCUMENT_PATH) --min-len $(MIN_LEN)
 
-test: ## Runs a sample version of this script 
-	$(UV) run python -m src.cli \
-		--document-path ./sample.tex \
-		--min-len 4
+sample: ## Run word count on sample.tex
+	$(UV) run latex-wc --document-path ./sample.tex --min-len $(MIN_LEN)
+
+test: ## Run tests
+	$(UV) run pytest -q
+
+build: ## Build sdist/wheel
+	$(UV) build
+
+clean: ## Remove build artifacts
+	rm -rf dist build *.egg-info

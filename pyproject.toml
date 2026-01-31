@@ -8,11 +8,10 @@ version = "0.1.0"
 description = "Count words in LaTeX documents while ignoring commands, math, and common non-text regions."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "Unlicense"
 authors = [{ name = "Seth Barrett" }]
 keywords = ["latex", "word-count", "tex", "cli"]
 classifiers = [
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -34,6 +33,7 @@ latex-wc = "latex_wc.cli:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
+license-files = ["LICENSE"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

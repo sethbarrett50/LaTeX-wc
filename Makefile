@@ -40,3 +40,7 @@ build: ## Build sdist/wheel
 
 clean: ## Remove build artifacts
 	rm -rf dist build *.egg-info
+
+preflight: ## Build + run twine metadata checks
+	$(UV) build
+	uvx twine check dist/*

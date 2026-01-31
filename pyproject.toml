@@ -1,9 +1,45 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "latex-word-count"
+name = "latex-wc"
 version = "0.1.0"
-description = "Add your description here"
+description = "Count words in LaTeX documents while ignoring commands, math, and common non-text regions."
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "ruff>=0.14.10",
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Seth Barrett" }]
+keywords = ["latex", "word-count", "tex", "cli"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "Topic :: Text Processing",
+]
+
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/sethbarrett50/LaTeX-wc"
+Issues = "https://github.com/sethbarrett50/LaTeX-wc/issues"
+
+[project.scripts]
+latex-wc = "latex_wc.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.14.10",
+  "pytest>=8.0.0",
 ]

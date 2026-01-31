@@ -3,7 +3,7 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "latex-word-count"
+name = "latex-wc"
 version = "0.1.0"
 description = "Count words in LaTeX documents while ignoring commands, math, and common non-text regions."
 readme = "README.md"

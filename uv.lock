@@ -21,7 +21,7 @@ wheels = [
 ]
 
 [[package]]
-name = "latex-word-count"
+name = "latex-wc"
 version = "0.1.0"
 source = { editable = "." }
 

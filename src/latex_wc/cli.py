@@ -41,8 +41,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help='Path to a LaTeX .tex file (optional; overridden by positional PATH if provided).',
     )
 
-    parser.add_argument('--top', type=int, default=100, help='Show top N most frequent words (default: 100).')
-    parser.add_argument('--min-len', type=int, default=1, help='Minimum token length to include (default: 1).')
+    parser.add_argument('--top', type=int, default=25, help='Show top N most frequent words (default: 25).')
+    parser.add_argument('--min-len', type=int, default=4, help='Minimum token length to include (default: 4).')
 
     parser.add_argument(
         '--out-dir',

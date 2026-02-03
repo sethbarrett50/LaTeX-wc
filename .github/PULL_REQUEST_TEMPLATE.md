@@ -6,11 +6,12 @@
 - [ ] Feature
 - [ ] Docs
 - [ ] Refactor
+- [ ] CI
 
 ## Testing
-- [ ] `uv run pytest`
-- [ ] `uv run ruff check .`
-- [ ] `uv run ruff format .`
+- [ ] `make lint`
+- [ ] `make test`
+- [ ] `make build`
 
 ## Notes
 <!-- Anything reviewers should know -->

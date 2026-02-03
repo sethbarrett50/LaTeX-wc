@@ -1,6 +1,6 @@
-# LaTeX Word Count
+# `latex-wc`
 
-A small CLI tool that counts words in a LaTeX `.tex` file while trying to ignore LaTeX “noise”:
+A small CLI tool that counts words in LaTeX `.tex` files while trying to ignore LaTeX “noise”:
 
 - Removes comments (`% ...`)
 - Removes common math forms (`$...$`, `$$...$$`, `\(...\)`, `\[...\]`, and common math environments)
@@ -8,7 +8,7 @@ A small CLI tool that counts words in a LaTeX `.tex` file while trying to ignore
 - Strips LaTeX command names while preserving human-visible brace text
 - Tokenizes words and reports totals + top-N frequencies
 
-It can also optionally write:
+Optionally writes:
 - `words.txt` (one token per line)
 - `top_words.csv` (ranked word frequency table)
 
@@ -16,26 +16,49 @@ It can also optionally write:
 
 ---
 
-## Install (PyPI)
+## Install (recommended: isolated CLI via `uv` / `pipx`)
 
-This project is designed to be used as an **isolated CLI tool** via `uv`.
+**Distribution name:** `latex-word-count`  
+**CLI command:** `latex-wc`  
+**Import package:** `latex_wc`
 
-### One-off run (no project setup)
+### Option A: One-off run with `uvx` (no install)
 
 ```bash
-uvx latex-wc --document-path ./paper.tex
+uvx latex-wc ./paper.tex
 ```
 
-### Install as a persistent tool
+If you want directory recursion:
+
+```bash
+uvx latex-wc ./tex/
+```
+
+### Option B: Install as a persistent tool with `uv`
 
 ```bash
 uv tool install latex-wc
-latex-wc --document-path ./paper.tex
+latex-wc ./paper.tex
 ```
 
-> Distribution name: `latex-word-count`
-> CLI command: `latex-wc`
-> Import package: `latex_wc`
+Upgrade later:
+
+```bash
+uv tool upgrade latex-wc
+```
+
+### Option C: Install as a persistent tool with `pipx`
+
+```bash
+pipx install latex-wc
+latex-wc ./paper.tex
+```
+
+Upgrade later:
+
+```bash
+pipx upgrade latex-wc
+```
 
 ---
 
@@ -43,39 +66,60 @@ latex-wc --document-path ./paper.tex
 
 ### Basic
 
+Pass either a **file** or a **directory**:
+
+```bash
+latex-wc ./paper.tex
+latex-wc ./thesis/     # recursively counts all *.tex under ./thesis (one combined report)
+```
+
+### Backwards-compatible flag
+
+`--document-path` is still supported (positional `PATH` wins if both are provided):
+
 ```bash
 latex-wc --document-path ./paper.tex
+latex-wc ./paper.tex --document-path ./ignored.tex
 ```
 
 ### Arguments
 
-* `--document-path`
-  Path to the `.tex` file.
-  Default: `$DOCUMENT_PATH` if set, otherwise `./current_doc.tex`.
+* `PATH` (positional, optional)
+  Path to a `.tex` file or a directory.
+  If omitted: uses `$DOCUMENT_PATH` or searches the current directory recursively.
 
-* `--top`
+* `--top N`
   Number of top words to display.
-  Default: `100`.
+  Default: `100`
 
-* `--min-len`
+* `--min-len N`
   Minimum token length to include.
-  Default: `1`.
+  Default: `1`
 
-* `--out-dir`
+* `--out-dir DIR`
   If set, writes `words.txt` and `top_words.csv` into this directory.
   Default: `$LOG_DIR` if set; if empty, nothing is written.
 
-Examples:
+* `--debug`
+  Enables verbose debug logging to **stderr** (stdout remains the main report output).
+
+### Examples
 
 ```bash
 # Count words, show top 50, ignore tokens shorter than 4 chars
-latex-wc --document-path ./paper.tex --top 50 --min-len 4
+latex-wc ./paper.tex --top 50 --min-len 4
+
+# Count all .tex files under a directory (combined report)
+latex-wc ./tex/ --top 25
 
 # Write outputs to ./logs/
-latex-wc --document-path ./paper.tex --out-dir ./logs
+latex-wc ./paper.tex --out-dir ./logs
 
-# Use environment variables instead of flags
+# Use env vars (no args)
 DOCUMENT_PATH=./paper.tex LOG_DIR=./logs latex-wc
+
+# Verbose debug logs
+latex-wc ./paper.tex --debug
 ```
 
 ---
@@ -84,7 +128,7 @@ DOCUMENT_PATH=./paper.tex LOG_DIR=./logs latex-wc
 
 The CLI prints:
 
-* Document path
+* Document path (file mode) **or** directory + number of files (directory mode)
 * Total words
 * Unique words
 * Top-N word frequency list
@@ -96,101 +140,36 @@ If `--out-dir` is set, two files are written:
 
 ---
 
-## Build / Local Development
+## Development (repo)
 
-### Requirements
+This section is for contributors; most users should use `uvx`, `uv tool`, or `pipx` above.
+
+Requirements:
 
 * Python `>=3.11`
-* [`uv`](https://docs.astral.sh/uv/) installed
+* `uv`
 
-### Sync deps
+Common commands:
 
 ```bash
 make sync
-```
-
-### Run locally (repo version)
-
-```bash
-make run
-```
-
-Or test against the included sample:
-
-```bash
-make sample
-```
-
-### Lint / Format
-
-```bash
-make lint
-```
-
-### Tests
-
-```bash
 make test
-```
-
-### Build artifacts (wheel + sdist)
-
-```bash
+make lint
 make build
 ```
 
-### Preflight checks (build + metadata)
-
-```bash
-make preflight
-```
-
----
-
-## Using a local build in another repo (preflight install)
-
-After building in this repo (`make build`), you can install the wheel or sdist into any other directory using uv only.
-
-From the other repo:
-
-```bash
-uv init --layout=bare
-uv add /ABS/PATH/TO/dist/latex_word_count-0.1.0-py3-none-any.whl
-uv run -- latex-wc --document-path ./paper.tex
-```
-
-You can also install the sdist:
-
-```bash
-uv add /ABS/PATH/TO/dist/latex_word_count-0.1.0.tar.gz
-```
-
----
-
-## Project Layout
+Project layout:
 
 ```text
 .
-├── current_doc.tex
-├── Makefile
-├── pyproject.toml
 ├── src/
 │   └── latex_wc/
 │       ├── cli.py
+│       ├── discovery.py
 │       ├── latex_tokens.py
 │       ├── counting.py
 │       ├── writers.py
 │       ├── io_utils.py
 │       └── models.py
-├── tests/
-└── uv.lock
+└── tests/
 ```
-
----
-
-## Notes / Behavior
-
-* Encoding: reads as UTF-8, falls back to Latin-1 if needed.
-* LaTeX handling is heuristic (by design). It aims to approximate a human word count and intentionally drops
-  some content associated with references/URLs/etc.
-* Tokenization is English-letter oriented (`A-Za-z` with optional apostrophes).

@@ -14,3 +14,6 @@ wheels/
 
 # Dataset 
 current_doc.tex
+
+# Testing
+.pytest_cache/

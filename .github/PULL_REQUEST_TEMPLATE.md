@@ -7,6 +7,7 @@
 - [ ] Docs
 - [ ] Refactor
 - [ ] CI
+- [ ] Deps
 
 ## Testing
 - [ ] `make lint`

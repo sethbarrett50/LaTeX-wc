@@ -5,7 +5,7 @@ UV    ?= uv
 RUFF  ?= ruff
 PY    ?= python
 
-DOCUMENT_PATH ?= ./current_doc.tex
+DOCUMENT_PATH ?= ./assets/sample.tex
 MIN_LEN ?= 4
 
 .PHONY: help sync lint format check test run sample build clean
@@ -30,7 +30,7 @@ run: ## Run word count on current_doc.tex
 	$(UV) run latex-wc --document-path $(DOCUMENT_PATH) --min-len $(MIN_LEN)
 
 sample: ## Run word count on sample.tex
-	$(UV) run latex-wc --document-path ./sample.tex --min-len $(MIN_LEN)
+	$(UV) run latex-wc --document-path ./assets/sample.tex --min-len $(MIN_LEN)
 
 test: ## Run tests
 	$(UV) run pytest -q

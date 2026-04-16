@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "latex-wc"
-version = "0.2.7"
+version = "0.2.8"
 description = "Count words in LaTeX documents while ignoring commands, math, and common non-text regions."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -52,4 +52,4 @@ testpaths = ["tests"]
 root = ["src"]
 
 [tool.deptry.per_rule_ignores]
-DEP003 = ["dark_harvest"]
+DEP003 = ["latex_wc"]

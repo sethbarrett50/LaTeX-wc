@@ -52,4 +52,4 @@ testpaths = ["tests"]
 root = ["src"]
 
 [tool.deptry.per_rule_ignores]
-DEP003 = ["dark_harvest"]
+DEP003 = ["latex_wc"]

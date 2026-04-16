@@ -44,3 +44,6 @@ clean: ## Remove build artifacts
 preflight: ## Build + run twine metadata checks
 	$(UV) build
 	uvx twine check dist/*
+
+deps.check: ## Check for dependency issues
+	$(UV) run deptry .

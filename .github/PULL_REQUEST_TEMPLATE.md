@@ -13,6 +13,7 @@
 - [ ] `make lint`
 - [ ] `make test`
 - [ ] `make build`
+- [ ] `make deps.check`
 
 ## Notes
 <!-- Anything reviewers should know -->

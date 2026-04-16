@@ -64,7 +64,7 @@ wheels = [
 
 [[package]]
 name = "latex-wc"
-version = "0.2.7"
+version = "0.2.8"
 source = { editable = "." }
 
 [package.dev-dependencies]

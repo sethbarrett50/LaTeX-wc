@@ -43,6 +43,7 @@ dev = [
   "ruff>=0.15.9",
   "pytest>=8.0.0",
   "deptry>=0.25.1",
+  "twine>=6.2.0",
 ]
 
 [tool.pytest.ini_options]

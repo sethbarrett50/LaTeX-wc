@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "latex-wc"
-version = "0.2.9"
+version = "0.2.10"
 description = "Count words in LaTeX documents while ignoring commands, math, and common non-text regions."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -41,7 +41,7 @@ where = ["src"]
 [dependency-groups]
 dev = [
   "ruff>=0.15.9",
-  "pytest>=8.0.0",
+  "pytest>=9.0.3",
   "deptry>=0.25.1",
   "twine>=6.2.0",
 ]

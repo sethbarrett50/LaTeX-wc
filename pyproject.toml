@@ -41,7 +41,7 @@ where = ["src"]
 [dependency-groups]
 dev = [
   "ruff>=0.15.9",
-  "pytest>=8.0.0",
+  "pytest>=9.0.3",
   "deptry>=0.25.1",
   "twine>=6.2.0",
 ]

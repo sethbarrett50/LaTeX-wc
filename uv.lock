@@ -353,7 +353,7 @@ wheels = [
 
 [[package]]
 name = "latex-wc"
-version = "0.2.11"
+version = "0.2.12"
 source = { editable = "." }
 
 [package.dev-dependencies]
@@ -368,10 +368,10 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "deptry", specifier = ">=0.25.1" },
-    { name = "pytest", specifier = ">=9.0.3" },
-    { name = "ruff", specifier = ">=0.15.12" },
-    { name = "twine", specifier = ">=6.2.0" },
+    { name = "deptry", specifier = ">=0.25.1,<1" },
+    { name = "pytest", specifier = ">=9.0.3,<10" },
+    { name = "ruff", specifier = ">=0.15.12,<1" },
+    { name = "twine", specifier = ">=6.2.0,<7" },
 ]
 
 [[package]]
